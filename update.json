@@ -1,0 +1,18 @@
+{
+  "id" : 2,
+  "first_name": "Fandi",
+  "last_name" : "Dachi",
+  "username" : "fanzdare12",
+  "password" : "pankdot12",
+  "email_address" : "fanzdare@gmail.com",
+  "phone_number" : "081271762836",
+  "date_of_birth" : "2000-03-21",
+  "address" : "Sumatera Utara, Medan Tembung, Jl. Pertiwi Ujung No.69",
+  "role" : "admin",
+  "credit_card_number" : "",
+  "credit_card_type" : "",
+  "credit_card_expired_month" : "",
+  "credit_card_expired_year" : "",
+  "credit_card_cvv" : "",
+  "status" : true
+}
