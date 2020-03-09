@@ -18,10 +18,8 @@ package cmd
 import (
 	"context"
 	"github.com/G0tYou/user-service-cli/helper"
-	"github.com/SleepingNext/product-service-cli/cmd"
 	"log"
-	pb"github.com/G0tYou/user-service/proto"
-	"google.golang.org/grpc"
+
 	"github.com/spf13/cobra"
 )
 
@@ -55,24 +53,18 @@ func init() {
 }
 
 func store(args []string) {
-	// Connect to grpc client
-	conn, err := grpc.Dial(cmd.Address, grpc.WithInsecure())
-	if err != nil{
-		log.Fatalf("did not connect: #{err}")
-	}
-	defer conn.Close()
-	client := pb.NewUserServiceClient(conn)
+	client := NewClient()
 
-	file := args[0]
+	file := "data/" + args[0]
 	user, err := helper.ParseFile(file)
 	if err != nil {
-		log.Fatalf("could not parse file: #{err}")
+		log.Fatalf("could not parse file: %v", err)
 	}
 
-	//call StoreUser rpc from grpc client
+	// Call StoreUser rpc from grpc client
 	res, err := client.StoreUser(context.Background(), user)
-	if err != nil{
-		log.Fatalf("could not store the product in file = #{file} #{err}")
+	if err != nil {
+		log.Fatalf("could not store the user in file = %s %v", file, err)
 	}
 	log.Println(res.User)
 }

@@ -17,16 +17,16 @@ package cmd
 
 import (
 	"context"
-	pb "github.com/G0tYou/user-service/proto"
-	"github.com/G0tYou/user-service-cli/cmd"
 	"log"
-	"google.golang.org/grpc"
+	"strconv"
+
+	userPB "github.com/G0tYou/user-service/proto"
 	"github.com/spf13/cobra"
 )
 
-// indexCmd represents the index command
-var indexCmd = &cobra.Command{
-	Use:   "index",
+// destroyCmd represents the destroy command
+var destroyCmd = &cobra.Command{
+	Use:   "destroy",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -35,53 +35,37 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		index()
+		destroy(args)
 	},
 }
 
-func index() {
-	// Connect to grpc client
-	conn, err := grpc.Dial(cmd.Address, grpc.WithInsecure())
-	if err != nil{
-		log.Fatalf("did not connect: #{err}")
-	}
-	defer conn.Close()
-	client := pb.NewUserServiceClient(conn)
-
-	// Call indexUser rpc from grpc client
-	res, err:= client.IndexUser(context.Background(), &pb.IndexUsersRequest{})
-	if err != nil{
-		log.Fatalf("could not index users #{err}")
-	}
-	for _, user := range res.Users {
-		log.Println(user)
-	}
-}
-
 func init() {
-	rootCmd.AddCommand(indexCmd)
+	rootCmd.AddCommand(destroyCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// indexCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// destroyCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// indexCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// destroyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-
-func index() {
+func destroy(args []string) {
 	client := NewClient()
 
-	// Call IndexUsers rpc from grpc client
-	res, err := client.IndexUsers(context.Background(), &pb.IndexUsersRequest{})
+	// Parsing the argument
+	id, err := strconv.ParseInt(args[0], 10, 32)
 	if err != nil {
-		log.Fatalf("could not index users %v", err)
+		log.Fatalf("could not parse the argument provided %v", err)
 	}
-	for _, user := range res.Users {
-		log.Println(user)
+
+	// Call DestroyUser rpc from grpc client
+	res, err := client.DestroyUser(context.Background(), &userPB.User{Id: int32(id)})
+	if err != nil {
+		log.Fatalf("could not destroy the user with id = %d %v", id, err)
 	}
+	log.Println(res.User)
 }

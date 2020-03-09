@@ -17,16 +17,14 @@ package cmd
 
 import (
 	"context"
-	pb "github.com/G0tYou/user-service/proto"
-	"github.com/G0tYou/user-service-cli/cmd"
-	"log"
-	"google.golang.org/grpc"
+	"github.com/SleepingNext/product-service-cli/helper"
 	"github.com/spf13/cobra"
+	"log"
 )
 
-// indexCmd represents the index command
-var indexCmd = &cobra.Command{
-	Use:   "index",
+// updateCmd represents the update command
+var updateCmd = &cobra.Command{
+	Use:   "update",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -35,53 +33,37 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		index()
+		update(args)
 	},
 }
 
-func index() {
-	// Connect to grpc client
-	conn, err := grpc.Dial(cmd.Address, grpc.WithInsecure())
-	if err != nil{
-		log.Fatalf("did not connect: #{err}")
-	}
-	defer conn.Close()
-	client := pb.NewUserServiceClient(conn)
-
-	// Call indexUser rpc from grpc client
-	res, err:= client.IndexUser(context.Background(), &pb.IndexUsersRequest{})
-	if err != nil{
-		log.Fatalf("could not index users #{err}")
-	}
-	for _, user := range res.Users {
-		log.Println(user)
-	}
-}
-
 func init() {
-	rootCmd.AddCommand(indexCmd)
+	rootCmd.AddCommand(updateCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// indexCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// updateCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// indexCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// updateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-
-func index() {
+func update(args []string) {
 	client := NewClient()
 
-	// Call IndexUsers rpc from grpc client
-	res, err := client.IndexUsers(context.Background(), &pb.IndexUsersRequest{})
+	file := "data/" + args[0]
+	user, err := helper.ParseFile(file)
 	if err != nil {
-		log.Fatalf("could not index users %v", err)
+		log.Fatalf("could not parse file: %v", err)
 	}
-	for _, user := range res.Users {
-		log.Println(user)
+
+	// Call UpdateUser rpc from grpc client
+	res, err := client.UpdateUser(context.Background(), user)
+	if err != nil {
+		log.Fatalf("could not update the user with id = %d %v", user.Id, err)
 	}
+	log.Println(res.User)
 }

@@ -17,10 +17,11 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
 
-	homedir "github.com/mitchellh/go-homedir"
+	userPB "github.com/G0tYou/user-service/proto"
+	"github.com/mitchellh/go-homedir"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
@@ -88,4 +89,9 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+func NewClient() userPB.UserServiceClient {
+	userServiceClient := userPB.NewUserServiceClient("com.ta04.srv.user", client.DefaultClient)
+	return userServiceClient
 }
