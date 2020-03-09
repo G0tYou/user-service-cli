@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"os"
 
-	userPB "github.com/G0tYou/user-service/proto"
+	useruserPB "github.com/G0tYou/user-service/proto"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -91,7 +91,7 @@ func initConfig() {
 	}
 }
 
-func NewClient() userPB.UserServiceClient {
-	userServiceClient := userPB.NewUserServiceClient("com.ta04.srv.user", client.DefaultClient)
+func NewClient() useruserPB.UserServiceClient {
+	userServiceClient := useruserPB.NewUserServiceClient("com.ta04.srv.user", client.DefaultClient)
 	return userServiceClient
 }

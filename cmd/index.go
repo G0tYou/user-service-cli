@@ -17,7 +17,7 @@ package cmd
 
 import (
 	"context"
-	pb "github.com/G0tYou/user-service/proto"
+	userPB "github.com/G0tYou/user-service/proto"
 	"github.com/G0tYou/user-service-cli/cmd"
 	"log"
 	"google.golang.org/grpc"
@@ -46,10 +46,10 @@ func index() {
 		log.Fatalf("did not connect: #{err}")
 	}
 	defer conn.Close()
-	client := pb.NewUserServiceClient(conn)
+	client := userPB.NewUserServiceClient(conn)
 
 	// Call indexUser rpc from grpc client
-	res, err:= client.IndexUser(context.Background(), &pb.IndexUsersRequest{})
+	res, err:= client.IndexUser(context.Background(), &userPB.IndexUsersRequest{})
 	if err != nil{
 		log.Fatalf("could not index users #{err}")
 	}
@@ -77,7 +77,7 @@ func index() {
 	client := NewClient()
 
 	// Call IndexUsers rpc from grpc client
-	res, err := client.IndexUsers(context.Background(), &pb.IndexUsersRequest{})
+	res, err := client.IndexUsers(context.Background(), &userPB.IndexUsersRequest{})
 	if err != nil {
 		log.Fatalf("could not index users %v", err)
 	}
