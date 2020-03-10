@@ -14,5 +14,5 @@
   "credit_card_expired_month" : "",
   "credit_card_expired_year" : "",
   "credit_card_cvv" : "",
-  "status" : true
+  "status" : "true"
 }
