@@ -18,10 +18,8 @@ package cmd
 import (
 	"context"
 	userPB "github.com/G0tYou/user-service/proto"
-	"github.com/G0tYou/user-service-cli/cmd"
-	"log"
-	"google.golang.org/grpc"
 	"github.com/spf13/cobra"
+	"log"
 )
 
 // indexCmd represents the index command
@@ -37,25 +35,6 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		index()
 	},
-}
-
-func index() {
-	// Connect to grpc client
-	conn, err := grpc.Dial(cmd.Address, grpc.WithInsecure())
-	if err != nil{
-		log.Fatalf("did not connect: #{err}")
-	}
-	defer conn.Close()
-	client := userPB.NewUserServiceClient(conn)
-
-	// Call indexUser rpc from grpc client
-	res, err:= client.IndexUser(context.Background(), &userPB.IndexUsersRequest{})
-	if err != nil{
-		log.Fatalf("could not index users #{err}")
-	}
-	for _, user := range res.Users {
-		log.Println(user)
-	}
 }
 
 func init() {

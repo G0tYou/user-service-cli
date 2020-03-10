@@ -20,6 +20,7 @@ import (
 	"os"
 
 	useruserPB "github.com/G0tYou/user-service/proto"
+	"github.com/micro/go-micro/client"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"

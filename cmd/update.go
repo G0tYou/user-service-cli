@@ -17,7 +17,7 @@ package cmd
 
 import (
 	"context"
-	"github.com/SleepingNext/product-service-cli/helper"
+	"github.com/G0tYou/user-service-cli/helper"
 	"github.com/spf13/cobra"
 	"log"
 )
