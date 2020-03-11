@@ -69,7 +69,7 @@ func destroy(args []string) {
 	})
 
 	// Call DestroyUser rpc from grpc client
-	res, err := client.DestroyUser(context.Background(), &userPB.User{Id: int32(id)})
+	res, err := client.DestroyUser(ctx, &userPB.User{Id: int32(id)})
 	if err != nil {
 		log.Fatalf("could not destroy the user with id = %d %v", id, err)
 	}
