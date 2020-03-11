@@ -52,7 +52,6 @@ func init() {
 	// indexCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-
 func index(args []string) {
 	client := NewClient()
 
