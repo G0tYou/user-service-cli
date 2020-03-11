@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"context"
+	"github.com/micro/go-micro/metadata"
 	"log"
 	"strconv"
 
@@ -61,6 +62,11 @@ func destroy(args []string) {
 	if err != nil {
 		log.Fatalf("could not parse the argument provided %v", err)
 	}
+
+	token := args[1]
+	ctx := metadata.NewContext(context.Background(), map[string]string{
+		"token": token,
+	})
 
 	// Call DestroyUser rpc from grpc client
 	res, err := client.DestroyUser(context.Background(), &userPB.User{Id: int32(id)})

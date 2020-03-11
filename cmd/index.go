@@ -18,6 +18,7 @@ package cmd
 import (
 	"context"
 	userPB "github.com/G0tYou/user-service/proto"
+	"github.com/micro/go-micro/metadata"
 	"github.com/spf13/cobra"
 	"log"
 )
@@ -33,7 +34,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		index()
+		index(args)
 	},
 }
 
@@ -52,11 +53,16 @@ func init() {
 }
 
 
-func index() {
+func index(args []string) {
 	client := NewClient()
 
+	token := args[0]
+	ctx := metadata.NewContext(context.Background(), map[string]string{
+		"token": token,
+	})
+
 	// Call IndexUsers rpc from grpc client
-	res, err := client.IndexUsers(context.Background(), &userPB.IndexUsersRequest{})
+	res, err := client.IndexUsers(ctx, &userPB.IndexUsersRequest{})
 	if err != nil {
 		log.Fatalf("could not index users %v", err)
 	}

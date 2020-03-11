@@ -18,6 +18,7 @@ package cmd
 import (
 	"context"
 	"github.com/G0tYou/user-service-cli/helper"
+	"github.com/micro/go-micro/metadata"
 	"log"
 
 	"github.com/spf13/cobra"
@@ -61,8 +62,13 @@ func store(args []string) {
 		log.Fatalf("could not parse file: %v", err)
 	}
 
+	token := args[1]
+	ctx := metadata.NewContext(context.Background(), map[string]string{
+		"token": token,
+	})
+
 	// Call StoreUser rpc from grpc client
-	res, err := client.StoreUser(context.Background(), user)
+	res, err := client.StoreUser(ctx, user)
 	if err != nil {
 		log.Fatalf("could not store the user in file = %s %v", file, err)
 	}

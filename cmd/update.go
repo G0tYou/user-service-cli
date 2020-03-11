@@ -18,6 +18,7 @@ package cmd
 import (
 	"context"
 	"github.com/G0tYou/user-service-cli/helper"
+	"github.com/micro/go-micro/metadata"
 	"github.com/spf13/cobra"
 	"log"
 )
@@ -60,8 +61,13 @@ func update(args []string) {
 		log.Fatalf("could not parse file: %v", err)
 	}
 
+	token := args[1]
+	ctx := metadata.NewContext(context.Background(), map[string]string{
+		"token": token,
+	})
+
 	// Call UpdateUser rpc from grpc client
-	res, err := client.UpdateUser(context.Background(), user)
+	res, err := client.UpdateUser(ctx, user)
 	if err != nil {
 		log.Fatalf("could not update the user with id = %d %v", user.Id, err)
 	}
