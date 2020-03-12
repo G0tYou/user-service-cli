@@ -22,5 +22,6 @@ RUN apk add --no-cache ca-certificates
 
 RUN mkdir /app
 WORKDIR /app
-COPY data .
+COPY data/store.json /app/data/store.json
+COPY data/update.json /app/data/update.json
 COPY --from=build /go/src/app/user-service-cli .
