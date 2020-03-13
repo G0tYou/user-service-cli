@@ -65,7 +65,7 @@ func showbyusername(args []string) {
 	// Call ShowUser rpc from grpc client
 	res, err := client.ShowUserByUsername(context.Background(), &userPB.User{Username: string(user.Username)})
 	if err != nil {
-		log.Fatalf("could not show the user with username = %s %v", user.Username, err)
+		log.Printf("could not show the user with username = %s %v", user.Username, err)
 	}
 	log.Println(res.User)
 }

@@ -17,8 +17,9 @@ package cmd
 
 import (
 	"context"
-	"github.com/G0tYou/user-service-cli/helper"
 	"log"
+
+	"github.com/G0tYou/user-service-cli/helper"
 
 	"github.com/spf13/cobra"
 )
@@ -64,7 +65,7 @@ func store(args []string) {
 	// Call StoreUser rpc from grpc client
 	res, err := client.StoreUser(context.Background(), user)
 	if err != nil {
-		log.Fatalf("could not store the user in file = %s %v", file, err)
+		log.Printf("could not store the user in file = %s %v", file, err)
 	}
 	log.Println(res.User)
 }

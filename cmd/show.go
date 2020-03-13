@@ -17,9 +17,10 @@ package cmd
 
 import (
 	"context"
-	userPB "github.com/G0tYou/user-service/proto"
 	"log"
 	"strconv"
+
+	userPB "github.com/G0tYou/user-service/proto"
 
 	"github.com/spf13/cobra"
 )
@@ -65,7 +66,7 @@ func show(args []string) {
 	// Call ShowUser rpc from grpc client
 	res, err := client.ShowUser(context.Background(), &userPB.User{Id: int32(id)})
 	if err != nil {
-		log.Fatalf("could not show the user with id = %d %v", id, err)
+		log.Printf("could not show the user with id = %d %v", id, err)
 	}
 	log.Println(res.User)
 }

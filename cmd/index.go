@@ -17,10 +17,11 @@ package cmd
 
 import (
 	"context"
+	"log"
+
 	userPB "github.com/G0tYou/user-service/proto"
 	"github.com/micro/go-micro/metadata"
 	"github.com/spf13/cobra"
-	"log"
 )
 
 // indexCmd represents the index command
@@ -63,7 +64,7 @@ func index(args []string) {
 	// Call IndexUsers rpc from grpc client
 	res, err := client.IndexUsers(ctx, &userPB.IndexUsersRequest{})
 	if err != nil {
-		log.Fatalf("could not index users %v", err)
+		log.Printf("could not index users %v", err)
 	}
 	for _, user := range res.Users {
 		log.Println(user)

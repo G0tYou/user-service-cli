@@ -17,9 +17,10 @@ package cmd
 
 import (
 	"context"
-	"github.com/micro/go-micro/metadata"
 	"log"
 	"strconv"
+
+	"github.com/micro/go-micro/metadata"
 
 	userPB "github.com/G0tYou/user-service/proto"
 	"github.com/spf13/cobra"
@@ -71,7 +72,7 @@ func destroy(args []string) {
 	// Call DestroyUser rpc from grpc client
 	res, err := client.DestroyUser(ctx, &userPB.User{Id: int32(id)})
 	if err != nil {
-		log.Fatalf("could not destroy the user with id = %d %v", id, err)
+		log.Printf("could not destroy the user with id = %d %v", id, err)
 	}
 	log.Println(res.User)
 }

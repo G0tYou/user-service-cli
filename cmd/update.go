@@ -17,10 +17,11 @@ package cmd
 
 import (
 	"context"
+	"log"
+
 	"github.com/G0tYou/user-service-cli/helper"
 	"github.com/micro/go-micro/metadata"
 	"github.com/spf13/cobra"
-	"log"
 )
 
 // updateCmd represents the update command
@@ -69,7 +70,7 @@ func update(args []string) {
 	// Call UpdateUser rpc from grpc client
 	res, err := client.UpdateUser(ctx, user)
 	if err != nil {
-		log.Fatalf("could not update the user with id = %d %v", user.Id, err)
+		log.Printf("could not update the user with id = %d %v", user.Id, err)
 	}
 	log.Println(res.User)
 }
