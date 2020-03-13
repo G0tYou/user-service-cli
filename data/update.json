@@ -9,10 +9,10 @@
   "date_of_birth" : "2000-03-21",
   "address" : "Sumatera Utara, Medan Tembung, Jl. Pertiwi Ujung No.69",
   "role" : "admin",
-  "credit_card_number" : "",
-  "credit_card_type" : "",
-  "credit_card_expired_month" : "",
-  "credit_card_expired_year" : "",
-  "credit_card_cvv" : "",
+  "credit_card_number" : "empty",
+  "credit_card_type" : "empty",
+  "credit_card_expired_month" : "empty",
+  "credit_card_expired_year" : "empty",
+  "credit_card_cvv" : "empty",
   "status" : "active"
 }

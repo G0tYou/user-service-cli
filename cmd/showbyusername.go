@@ -19,7 +19,6 @@ import (
 	"context"
 	"log"
 
-	"github.com/G0tYou/user-service-cli/helper"
 	userPB "github.com/G0tYou/user-service/proto"
 	"github.com/spf13/cobra"
 )
@@ -55,17 +54,13 @@ func init() {
 func showbyusername(args []string) {
 	client := NewClient()
 
-	// Parsing the argument
-	file := args[0]
-	user, err := helper.ParseFile(file)
-	if err != nil {
-		log.Fatalf("could not parse the argument provided %v", err)
-	}
+	// Get the param
+	username := args[0]
 
 	// Call ShowUser rpc from grpc client
-	res, err := client.ShowUserByUsername(context.Background(), &userPB.User{Username: string(user.Username)})
+	res, err := client.ShowUserByUsername(context.Background(), &userPB.User{Username: username})
 	if err != nil {
-		log.Printf("could not show the user with username = %s %v", user.Username, err)
+		log.Printf("could not show the user with username = %s %v", username, err)
 	}
 	log.Println(res.User)
 }
