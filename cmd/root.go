@@ -20,7 +20,7 @@ import (
 	"os"
 
 	userPB "github.com/G0tYou/user-service/proto"
-	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro"
 	"github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -93,6 +93,14 @@ func initConfig() {
 }
 
 func NewClient() userPB.UserServiceClient {
-	userServiceClient := userPB.NewUserServiceClient("com.ta04.srv.user", client.DefaultClient)
+	// Create a new service
+	s := micro.NewService(
+		micro.Name("com.ta04.cli.user"),
+	)
+
+	// Initialize the service
+	s.Init()
+
+	userServiceClient := userPB.NewUserServiceClient("com.ta04.srv.user", s.Client())
 	return userServiceClient
 }
